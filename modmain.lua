@@ -2,6 +2,8 @@
 local ImageButton = GLOBAL.require "widgets/imagebutton"
 local SlotDetailsScreen = GLOBAL.require "screens/slotdetailsscreen" 
 local NewGameScreen = GLOBAL.require "screens/newgamescreen"
+
+local Widget = GLOBAL.require "widgets/widget"
 local NewIntegratedGameScreen = GLOBAL.require "screens/newintegratedgamescreen"
 
 -- read configured slots amount
@@ -206,18 +208,38 @@ local function SIS_PostConstruct(self)
             widget.portrait:Hide()
             widget.portraitbg:Hide()
 
-            if HasDLC() then
-                widget.bg:SetScale(1,.8,1)
-            else
-                widget:SetScale(1,1,1)
-            end
-
             if (widget.dlcindicator ~= nil) then
                 widget.dlcindicator:Hide()
             end
 
             widget.text:SetString(GLOBAL.STRINGS.UI.LOADGAMESCREEN.NEWWORLD)
             widget.text:SetPosition(0,0,0)
+
+            widget.text:SetAlpha(1)
+            widget:SetScale(1,1,1)
+            widget.bg:SetScale(1,.8,1)
+
+            widget.OnGainFocus = function(self)
+                Widget.OnGainFocus(self)
+                TheFrontEnd:GetSound():PlaySound("dontstarve/HUD/click_mouseover")
+                if HasDLC() then
+                    widget.bg:SetScale(1.05,.87,1)
+                else
+                    widget:SetScale(1.1,1.1,1)
+                end
+                widget.bg:GetAnimState():PlayAnimation("over")
+            end
+
+            widget.OnLoseFocus = function(self)
+                Widget.OnLoseFocus(self)
+                widget.base:SetPosition(0,0,0)
+                if HasDLC() then
+                    widget.bg:SetScale(1,.8,1)
+                else
+                    widget:SetScale(1,1,1)
+                end
+                widget.bg:GetAnimState():PlayAnimation("anim")
+            end
 
 		    widget.OnControl = function(self, control, down)
 				Control(control, down, function()
