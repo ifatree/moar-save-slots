@@ -1,10 +1,10 @@
 name = "Ton's Moar Save Slots"
-version = "1.1.1"
+version = "1.1.5"
 author = "dustin potter (ifatree)"
 
 description = [["Got any more of them... save game slots?!"
 
-We got "Ton's Moar"! (default 250 // configurable from 50 - 500)
+We got "Ton's Moar"! (default 100 // configurable from 5 - 500)
 
 "Ton" on Steam asked for even moar than the original 50 max save game slots from my previous mod, so... 
 
@@ -36,13 +36,17 @@ configuration_options =
 		name = "Tons_SaveSlots",
 		label = "Number of Slots",
 		options =	{
+						{description = "5", data = "5"},
+						{description = "15", data = "15"},
+						{description = "25", data = "25"},
 						{description = "50", data = "50"},
+						{description = "100", data = "100"},
 						{description = "150", data = "150"},
 						{description = "250", data = "250"},
 						{description = "Ton's", data = "500"},
 					},
 
-		default = "500",
+		default = "100",
 	
 	},
 	
